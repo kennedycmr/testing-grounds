@@ -48,6 +48,6 @@ jobs:
       working-directory: ./terraform
       run: |
         sed -i 's/<TF_STATE_BUCKET>/${{vars.TERRAFORM_STATE_BUCKET}}/g' main.tf
-        sed -i 's/<TF_STATE_PREFIX>/repo/g' main.tf
-        terraform init
+        sed -i 's/<TF_STATE_PREFIX>/${{GITHUB_REPOSITORY}}\/${{GITHUB_BASE_REF}}/g' main.tf
+        cat main.tf
 
