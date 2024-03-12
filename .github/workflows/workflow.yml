@@ -47,5 +47,7 @@ jobs:
     - name: Terraform Init
       id: init
       working-directory: ./terraform
-      run: terraform init
+      run: |
+        echo $TF_CLI_ARGS_init
+        terraform init
 
