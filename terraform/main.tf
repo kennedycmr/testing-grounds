@@ -1,8 +1,8 @@
 terraform {
   backend "gcs" {
     # Values configured as part of environment variables in pipeline
-    # bucket = "cam-test-tf-bucket"
-    # prefix = "terraform/state"
+    bucket = "<TF_STATE_BUCKET>"
+    prefix = "<TF_STATE_PREFIX>"
   }
 }
 
