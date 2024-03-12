@@ -30,8 +30,8 @@ jobs:
       uses: 'google-github-actions/auth@v2'
       with:
         token_format: 'access_token'
-        workload_identity_provider: 'projects/${{ secrets.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github1/providers/repo'
-        service_account: ${{ secrets.GCP_SA_EMAIL }}
+        workload_identity_provider: 'projects/276689580375/locations/global/workloadIdentityPools/github1/providers/repo'
+        service_account: 'deploy-01@cam-02052024.iam.gserviceaccount.com'
 
     #- name: Pipeline script A
     #  run: bash ./scripta.sh
