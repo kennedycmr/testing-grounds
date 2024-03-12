@@ -38,26 +38,26 @@ jobs:
         workload_identity_provider: "${{env.WRKL_ID_PROVIDER}}"
         service_account: ${{env.GCP_SA_EMAIL}}
 
-    #- name: Pipeline script A
-    #  run: bash ./scripta.sh
-
     - name: 'Set up Cloud SDK'
       uses: 'google-github-actions/setup-gcloud@v2'
 
     - name: 'Use gcloud CLI'
       run: 'gcloud info'      
 
-    - name: Get TF State Bucket Name
-      id: print_tf_bucket_name
-      run: | 
-        echo "This is the TERRAFORM_STATE_BUCKET: $TERRAFORM_STATE_BUCKET"
+    # - name: Terraform Init
+    #   id: init
+    #   working-directory: ./terraform
+    #   #run: terraform init -backend-config="bucket=gs://${{env.TERRAFORM_STATE_BUCKET}}" -backend-config="prefix=terraform/state"
+    #   run: | 
+    #     export TF_CLI_ARGS_init="-backend-config='bucket=gs://${{env.TERRAFORM_STATE_BUCKET}}'"
+    #     export TF_CLI_ARGS_init="$TF_CLI_ARGS_init -backend-config='prefix=terraform/state'" 
+    #     printf "\n\n TF_CLI_ARGS_init = $TF_CLI_ARGS_init \n\n"
+    #     terraform init
 
-    - name: Terraform Init
-      id: init
-      working-directory: ./terraform
-      #run: terraform init -backend-config="bucket=gs://${{env.TERRAFORM_STATE_BUCKET}}" -backend-config="prefix=terraform/state"
-      run: | 
-        export TF_CLI_ARGS_init="-backend-config='bucket=gs://${{env.TERRAFORM_STATE_BUCKET}}'"
-        export TF_CLI_ARGS_init="$TF_CLI_ARGS_init -backend-config='prefix=terraform/state'" 
-        printf "\n\n TF_CLI_ARGS_init = $TF_CLI_ARGS_init \n\n"
-        terraform init
+    - name: 'terraform init'
+      uses: hashicorp/terraform-github-actions@master
+      with: 
+        tf_actions_subcommand: 'init'
+        tf_actions_working_dir: './terraform'
+        tf_actions_comment: true
+        args: '-backend-config="bucket=gs://${{env.TERRAFORM_STATE_BUCKET}}" -backend-config="prefix=terraform/state"'
