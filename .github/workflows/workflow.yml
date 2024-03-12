@@ -5,10 +5,11 @@ on:
     branches: [ "main" ]
 
 env:
-  GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  GCP_PROJECT_NUMBER: ${{ secrets.GCP_PROJECT_NUMBER }}
-  GCP_SA_EMAIL: ${{ secrets.GCP_SA_EMAIL  }}
-  TERRAFORM_STATE_BUCKET: ${{ secrets.TERRAFORM_STATE_BUCKET }}
+  GCP_PROJECT_ID: ${{secrets.GCP_PROJECT_ID}}
+  GCP_PROJECT_NUMBER: ${{secrets.GCP_PROJECT_NUMBER}}
+  WRKL_ID_PROVIDER: ${{secrets.WRKL_ID_PROVIDER}}
+  GCP_SA_EMAIL: ${{secrets.GCP_SA_EMAIL}}
+  TERRAFORM_STATE_BUCKET: ${{secrets.TERRAFORM_STATE_BUCKET}}
 
 jobs:
   setup-build-publish-deploy:
@@ -30,8 +31,8 @@ jobs:
       uses: 'google-github-actions/auth@v2'
       with:
         token_format: 'access_token'
-        workload_identity_provider: 'projects/276689580375/locations/global/workloadIdentityPools/github2/providers/repo'
-        service_account: 'deploy-01@cam-02052024.iam.gserviceaccount.com'
+        workload_identity_provider: ${{secrets.WRKL_ID_PROVIDER}}
+        service_account: ${{secrets.GCP_SA_EMAIL}}
 
     #- name: Pipeline script A
     #  run: bash ./scripta.sh
@@ -44,4 +45,4 @@ jobs:
 
     - name: Terraform Init
       id: init
-      run: terraform init -backend-config="bucket=gs://${{ secrets.TERRAFORM_STATE_BUCKET }}" -backend-config="prefix=terraform/state"
+      run: terraform init -backend-config="bucket=gs://${{secrets.TERRAFORM_STATE_BUCKET}}" -backend-config="prefix=terraform/state"
