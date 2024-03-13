@@ -6,7 +6,6 @@ on:
 
 env:
   GCP_PROJECT_ID:         ${{secrets.GCP_PROJECT_ID}}
-  GCP_PROJECT_NUMBER:     ${{secrets.GCP_PROJECT_NUMBER}}
   WRKL_ID_PROVIDER:       ${{secrets.WRKL_ID_PROVIDER}}
   GCP_SA_EMAIL:           ${{secrets.GCP_SA_EMAIL}}
   TERRAFORM_STATE_BUCKET: ${{vars.TERRAFORM_STATE_BUCKET}}
