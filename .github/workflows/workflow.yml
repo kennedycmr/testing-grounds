@@ -47,6 +47,10 @@ jobs:
       id: init
       working-directory: ./terraform
       run: |
+        echo "env.TERRAFORM_STATE_BUCKET = $TERRAFORM_STATE_BUCKET"
+        export G=${{vars.TERRAFORM_STATE_BUCKET}}
+        echo "G = $G"
+        set
         sed -i "s/<TF_STATE_BUCKET>/${{vars.TERRAFORM_STATE_BUCKET}}/g" main.tf
         sed -i "s/<TF_STATE_PREFIX>/${{github.repository}}\/${{github.base_ref}}/g" main.tf
         cat main.tf
