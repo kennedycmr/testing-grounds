@@ -43,7 +43,7 @@ jobs:
     - name: 'Use gcloud CLI'
       run: 'gcloud info'      
 
-    - name: terraform Init
+    - name: terraform init
       id: init
       working-directory: ./terraform
       run: |
@@ -55,4 +55,9 @@ jobs:
       id: plan
       working-directory: ./terraform
       run: terraform plan
-  
+
+    - name: terraform apply
+      id: apply
+      working-directory: ./terraform
+      run: terraform apply -auto-approve
+      
