@@ -11,8 +11,6 @@ env:
   TERRAFORM_STATE_BUCKET: ${{vars.TERRAFORM_STATE_BUCKET}}
   TF_VAR_GCP_PROJECT_ID:  ${{secrets.GCP_PROJECT_ID}}
 
-
-
 jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
@@ -36,12 +34,15 @@ jobs:
         workload_identity_provider: "${{env.WRKL_ID_PROVIDER}}"
         service_account: ${{env.GCP_SA_EMAIL}}
 
+    # Setup gcloud sdk
     - name: 'Set up Cloud SDK'
       uses: 'google-github-actions/setup-gcloud@v2'
 
+    # Confirm our gcloud command is working
     - name: 'Use gcloud CLI'
       run: 'gcloud info'      
 
+    # initialize terraform after adding the state buckets to the config
     - name: terraform init
       id: init
       working-directory: ./terraform
@@ -50,11 +51,13 @@ jobs:
         sed -i "s|<TF_STATE_PREFIX>|$GITHUB_REPOSITORY|g" tf_backend_storage.tf
         terraform init
 
+    # run a terraform plan
     - name: terraform plan
       id: plan
       working-directory: ./terraform
       run: terraform plan
 
+    # run a terraform apply
     - name: terraform apply
       id: apply
       working-directory: ./terraform
