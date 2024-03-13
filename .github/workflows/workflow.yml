@@ -43,7 +43,7 @@ jobs:
     - name: 'Use gcloud CLI'
       run: 'gcloud info'      
 
-    - name: Terraform Init
+    - name: terraform Init
       id: init
       working-directory: ./terraform
       run: |
@@ -51,3 +51,8 @@ jobs:
         sed -i "s|<TF_STATE_PREFIX>|$GITHUB_REPOSITORY|g" tf_backend_storage.tf
         terraform init
 
+    - name: terraform plan
+      id: plan
+      working-directory: ./terraform
+      run: terraform plan
+  
