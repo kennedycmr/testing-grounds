@@ -47,9 +47,7 @@ jobs:
       id: init
       working-directory: ./terraform
       run: |
-        echo "env.TERRAFORM_STATE_BUCKET = $TERRAFORM_STATE_BUCKET"
-        echo "GITHUB_REPOSITORY = $GITHUB_REPOSITORY"
         sed -i "s|<TF_STATE_BUCKET>|$TERRAFORM_STATE_BUCKET|g" main.tf
         sed -i "s|<TF_STATE_PREFIX>|$GITHUB_REPOSITORY|g" main.tf
-        cat main.tf
+        terraform init
 
