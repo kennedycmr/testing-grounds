@@ -48,10 +48,8 @@ jobs:
       working-directory: ./terraform
       run: |
         echo "env.TERRAFORM_STATE_BUCKET = $TERRAFORM_STATE_BUCKET"
-        export G=${{vars.TERRAFORM_STATE_BUCKET}}
-        echo "G = $G"
-        set
-        sed -i "s/<TF_STATE_BUCKET>/${{vars.TERRAFORM_STATE_BUCKET}}/g" main.tf
-        sed -i "s/<TF_STATE_PREFIX>/${{github.repository}}\/${{github.base_ref}}/g" main.tf
+        echo "GITHUB_REPOSITORY = $GITHUB_REPOSITORY"
+        sed -i "s/<TF_STATE_BUCKET>/$TERRAFORM_STATE_BUCKET/g" main.tf
+        sed -i "s/<TF_STATE_PREFIX>/$GITHUB_REPOSITORY/g" main.tf
         cat main.tf
 
