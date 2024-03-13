@@ -47,7 +47,7 @@ jobs:
       id: init
       working-directory: ./terraform
       run: |
-        sed -i "s|<TF_STATE_BUCKET>|$TERRAFORM_STATE_BUCKET|g" main.tf
-        sed -i "s|<TF_STATE_PREFIX>|$GITHUB_REPOSITORY|g" main.tf
+        sed -i "s|<TF_STATE_BUCKET>|$TERRAFORM_STATE_BUCKET|g" tf_backend_storage.tf
+        sed -i "s|<TF_STATE_PREFIX>|$GITHUB_REPOSITORY|g" tf_backend_storage.tf
         terraform init
 
